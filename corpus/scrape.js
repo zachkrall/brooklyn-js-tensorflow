@@ -20,12 +20,12 @@ fetchData = () => {
     }
 
         console.log(`--- loop ${counter}---`);
-    
+
         let options = {
             host: 'api.github.com',
             path: `/repos/brooklynjs/brooklynjs.github.io/issues?state=all&page=${counter}`,
             port: 443,
-            headers: {            
+            headers: {
                 'User-Agent' : 'Myself'
             },
             json: true,
@@ -51,15 +51,12 @@ fetchData = () => {
                 counter++;
                 console.log('writing');
                 fs.appendFileSync( filePath , all, 'utf8');
-            }  
+            }
             console.log('---closing---');
         });
         req.end();
 
 };
 
-run = () => {
-    setInterval(fetchData, 3000);
-};
-  
-run();
+
+setInterval(fetchData, 3000);

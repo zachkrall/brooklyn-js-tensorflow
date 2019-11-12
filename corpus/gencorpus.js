@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const corpuspath = path.resolve(__dirname, 'text', 'corpus.txt');
+const corpuspath = path.resolve(__dirname, "text", "corpusssss.txt");
 
-let data = fs.readFileSync(__dirname + '/text/output.txt', {
+let data = fs.readFileSync(__dirname + "/text/output_20191111.txt", {
     encoding: 'utf8'
 });
 data = data.replace(/\]\[/g,',');
@@ -31,4 +31,36 @@ if (!exists){
 
 } else {
     console.log('File already exists at ' + corpuspath);
+}
+
+function sanitize (_input) {
+  let string = _input || "";
+
+  // remove hyperlinks
+  string = string.replace(/http:\/\/.*..*/g,'');
+
+  string = string.replace(/\r/g, '');
+  string = string.replace(/\n/g, '');
+  string = string.replace(/#/g, '');
+  string = string.replace(/\*/g, '');
+  string = string.replace(/\//g, '');
+  string = string.replace(/\\/g, '');
+  // string = string.replace(/BrooklynJS Talk Submission/g,'');
+
+  // try to get descriptions only
+  string = string.match(/Description:[\s\S]*Name/g) || string;
+
+  if (Array.isArray(string)){
+    string = string.join('');
+  }
+
+  string = string.replace(/[Dd]escription/g,'');
+  string = string.replace(/[Nn]ame/g,'');
+  string = string.replace(/:/g,'');
+  string = string.replace(/\[/g,'');
+  string = string.replace(/\]\(.*\)/g,'');
+  //
+  // input = input.replace(/:/g, '');
+
+  return string;
 }

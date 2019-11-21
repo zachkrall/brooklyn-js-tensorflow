@@ -38758,6 +38758,7 @@ let textData,
     sampleLen,
     model,
     text;
+(0, _ui.updateStatus)('Starting...');
 
 async function setup() {
   (0, _ui.buttonState)(false);
@@ -38779,11 +38780,11 @@ async function setup() {
   sentenceIndices = randomSlice[1];
   (0, _ui.updateStatus)('Seed Text Generated', 'green');
   (0, _ui.results)(seed);
-  (0, _ui.buttonState)(true); // gen();
+  (0, _ui.buttonState)(true);
 }
 
 async function gen() {
-  const text = await (0, _model.generateText)(model, textData, sentenceIndices, 200, 0.35);
+  text = await (0, _model.generateText)(model, textData, sentenceIndices, 200, 0.35);
   (0, _ui.updateStatus)('Completed', 'green');
   (0, _ui.results)(seed + text);
 }
@@ -38825,7 +38826,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58306" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59504" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

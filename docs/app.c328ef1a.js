@@ -38749,7 +38749,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const url = "https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master/model/brooklynjs/model.json";
+const repo = "https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master";
+const model_url = repo + "/model/brooklynjs/model.json";
+const corpus_url = repo + "/text/results/corpus.txt";
 let textData,
     seed,
     sentenceIndices = [],
@@ -38760,7 +38762,7 @@ let textData,
 async function setup() {
   (0, _ui.buttonState)(false);
   (0, _ui.updateStatus)('Loading Corpus...');
-  text = await fetch('https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master/text/results/corpus.txt', {
+  text = await fetch(corpus_url, {
     method: "GET"
   }).then(data => data.text()).catch(err => {
     (0, _ui.updateStatus)('Corpus failed', 'red');
@@ -38768,7 +38770,7 @@ async function setup() {
   });
   console.log(text.slice(0, 140));
   (0, _ui.updateStatus)('Loading Model...');
-  model = await tf.loadLayersModel(url);
+  model = await tf.loadLayersModel(model_url);
   sampleLen = model.inputs[0].shape[1];
   (0, _ui.updateStatus)('Model Loaded', 'green');
   textData = new _data.TextData('text-data', text, sampleLen, 3);
@@ -38823,7 +38825,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56643" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58306" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

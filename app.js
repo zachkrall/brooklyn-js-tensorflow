@@ -1,23 +1,19 @@
 import * as tf from '@tensorflow/tfjs';
-import {generateText } from './model/model.js';
+import { generateText } from './model/model.js';
 import { TextData } from './model/data.js';
 
 import {
-  updateStatus,
-  buttonState,
-  results,
-  button
+  updateStatus, buttonState, results, button
 } from './ui.js';
 
+const repo = "https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master";
 
-const url = "https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master/model/brooklynjs/model.json";
+const model_url = repo + "/model/brooklynjs/model.json";
+const corpus_url = repo + "/text/results/corpus.txt";
 
-let textData,
-    seed,
+let textData, seed,
     sentenceIndices = [],
-    sampleLen,
-    model,
-    text;
+    sampleLen, model, text;
 
 async function setup(){
 
@@ -25,7 +21,7 @@ async function setup(){
 
   updateStatus('Loading Corpus...');
 
-  text = await fetch('https://raw.githubusercontent.com/zachkrall/brooklyn-js-tensorflow/master/text/results/corpus.txt', { method: "GET"})
+  text = await fetch(corpus_url, { method: "GET"})
   .then( data => data.text() )
   .catch( err => {
     updateStatus('Corpus failed', 'red')
@@ -36,7 +32,7 @@ async function setup(){
 
   updateStatus('Loading Model...');
 
-  model = await tf.loadLayersModel(url);
+  model = await tf.loadLayersModel(model_url);
   sampleLen = model.inputs[0].shape[1];
 
   updateStatus('Model Loaded', 'green');

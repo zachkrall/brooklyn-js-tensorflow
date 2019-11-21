@@ -32,60 +32,60 @@ import { generateText } from './model';
 
 const handler = tfn.io.fileSystem("./model/brooklynjs/model.json");
 
-// function parseArgs() {
-//   const parser = argparse.ArgumentParser({
-//     description: 'Train an lstm-text-generation model.'
-//   });
-// //   parser.addArgument('textDatasetName', {
-// //     type: 'string',
-// //     choices: Object.keys(TEXT_DATA_URLS),
-// //     help: 'Name of the text dataset'
-// //   });
-//   parser.addArgument('modelJSONPath', {
+function parseArgs() {
+  const parser = argparse.ArgumentParser({
+    description: 'Train an lstm-text-generation model.'
+  });
+//   parser.addArgument('textDatasetName', {
 //     type: 'string',
-//     help: 'Path to the trained next-char prediction model saved on disk ' +
-//     '(e.g., ./my-model/model.json)'
+//     choices: Object.keys(TEXT_DATA_URLS),
+//     help: 'Name of the text dataset'
 //   });
-//   parser.addArgument('--genLength', {
-//     type: 'int',
-//     defaultValue: 200,
-//     help: 'Length of the text to generate.'
-//   });
-//   parser.addArgument('--temperature', {
-//     type: 'float',
-//     defaultValue: 0.5,
-//     help: 'Temperature value to use for text generation. Higher values ' +
-//     'lead to more random-looking generation results.'
-//   });
-//   parser.addArgument('--gpu', {
-//     action: 'storeTrue',
-//     help: 'Use CUDA GPU for training.'
-//   });
-//   parser.addArgument('--sampleStep', {
-//     type: 'int',
-//     defaultValue: 3,
-//     help: 'Step length: how many characters to skip between one example ' +
-//     'extracted from the text data to the next.'
-//   });
-//   return parser.parseArgs();
-// }
+  // parser.addArgument('modelJSONPath', {
+  //   type: 'string',
+  //   help: 'Path to the trained next-char prediction model saved on disk ' +
+  //   '(e.g., ./my-model/model.json)'
+  // });
+  parser.addArgument('--genLength', {
+    type: 'int',
+    defaultValue: 200,
+    help: 'Length of the text to generate.'
+  });
+  parser.addArgument('--temperature', {
+    type: 'float',
+    defaultValue: 0.5,
+    help: 'Temperature value to use for text generation. Higher values ' +
+    'lead to more random-looking generation results.'
+  });
+  parser.addArgument('--gpu', {
+    action: 'storeTrue',
+    help: 'Use CUDA GPU for training.'
+  });
+  parser.addArgument('--sampleStep', {
+    type: 'int',
+    defaultValue: 3,
+    help: 'Step length: how many characters to skip between one example ' +
+    'extracted from the text data to the next.'
+  });
+  return parser.parseArgs();
+}
 
 export async function gen() {
 
     let result = '';
 
     (async () => {
-//   const args = parseArgs();
+  const args = parseArgs();
 
-//   if (args.gpu) {
-//     console.log('Using GPU');
-//     require('@tensorflow/tfjs-node-gpu');
-//   } else {
-    // console.log('Using CPU');
+  if (args.gpu) {
+    console.log('Using GPU');
+    require('@tensorflow/tfjs-node-gpu');
+  } else {
+    console.log('Using CPU');
     require('@tensorflow/tfjs-node');
-//   }
+  }
 
-      // console.log('model:');
+  // console.log('model:');
   // Load the model.
   const model = await tf.loadLayersModel(handler);
 
@@ -106,14 +106,12 @@ export async function gen() {
   console.log('seed indices: ', seedIndices);
   console.log('seed: ', seed);
 
-//   console.log(`Seed text:\n"${seed}"\n`);
-
   const generated = await generateText(
-      model, textData, seedIndices, 600, 0.35);
+      model, textData, seedIndices, 600, args.temperature); // i like 0.35 temp
 
   console.log(generated);
   return generated;
-  
+
   })();
 }
 gen();

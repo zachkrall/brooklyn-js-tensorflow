@@ -13,6 +13,9 @@ body{
 section{
   padding: 1.5rem 2rem 0rem 2rem;
 }
+span#status{
+  display:inline-block;
+}
 span#status:before{
   display:inline-block;
   vertical-align: middle;

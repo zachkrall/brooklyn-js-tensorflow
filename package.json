@@ -7,7 +7,7 @@
     "train": "babel-node ./model/train.js --savePath ./model/brooklynjs/",
     "gen": "babel-node ./model/gen.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "web": "parcel index.html -d docs"
+    "web": "parcel index.html -d docs --public-url '.'"
   },
   "keywords": [],
   "author": "",

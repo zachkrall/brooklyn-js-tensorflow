@@ -16,7 +16,7 @@
  */
 
 import * as tf from '@tensorflow/tfjs';
-// import {TextData} from './data';
+import { TextData } from './data.js';
 
 /**
  * Create a model for next-character prediction.

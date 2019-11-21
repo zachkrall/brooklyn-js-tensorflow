@@ -18,22 +18,22 @@ export class TextData {
       tf.util.assert(
           sampleStep > 0,
           `Expected sampleStep to be a positive integer, but got ${sampleStep}`);
-  
+
       if (!dataIdentifier) {
         throw new Error('Model identifier is not provided.');
       }
-  
+
       this.dataIdentifier_ = dataIdentifier;
-  
+
       this.textString_ = textString;
       this.textLen_ = textString.length;
       this.sampleLen_ = sampleLen;
       this.sampleStep_ = sampleStep;
-  
+
       this.getCharSet_();
       this.convertAllTextToIndices_();
     }
-  
+
     /**
      * Get data identifier.
      *
@@ -42,7 +42,7 @@ export class TextData {
     dataIdentifier() {
       return this.dataIdentifier_;
     }
-  
+
     /**
      * Get length of the training text data.
      *
@@ -51,14 +51,14 @@ export class TextData {
     textLen() {
       return this.textLen_;
     }
-  
+
     /**
      * Get the length of each training example.
      */
     sampleLen() {
       return this.sampleLen_;
     }
-  
+
     /**
      * Get the size of the character set.
      *
@@ -68,7 +68,7 @@ export class TextData {
     charSetSize() {
       return this.charSetSize_;
     }
-  
+
     /**
      * Generate the next epoch of data for training models.
      *
@@ -79,11 +79,11 @@ export class TextData {
      */
     nextDataEpoch(numExamples) {
       this.generateExampleBeginIndices_();
-  
+
       if (numExamples == null) {
         numExamples = this.exampleBeginIndices_.length;
       }
-  
+
       const xsBuffer = new tf.TensorBuffer([
           numExamples, this.sampleLen_, this.charSetSize_]);
       const ysBuffer  = new tf.TensorBuffer([numExamples, this.charSetSize_]);
@@ -98,7 +98,7 @@ export class TextData {
       }
       return [xsBuffer.toTensor(), ysBuffer.toTensor()];
     }
-  
+
     /**
      * Get the unique character at given index from the character set.
      *
@@ -108,7 +108,7 @@ export class TextData {
     getFromCharSet(index) {
       return this.charSet_[index];
     }
-  
+
     /**
      * Convert text string to integer indices.
      *
@@ -122,7 +122,7 @@ export class TextData {
       }
       return indices;
     }
-  
+
     /**
      * Get a random slice of text data.
      *
@@ -135,7 +135,7 @@ export class TextData {
       const textSlice = this.slice_(startIndex, startIndex + this.sampleLen_);
       return [textSlice, this.textToIndices(textSlice)];
     }
-  
+
     /**
      * Get a slice of the training text data.
      *
@@ -147,7 +147,7 @@ export class TextData {
     slice_(startIndex, endIndex) {
       return this.textString_.slice(startIndex, endIndex);
     }
-  
+
     /**
      * Get the set of unique characters from text.
      */
@@ -160,14 +160,14 @@ export class TextData {
       }
       this.charSetSize_ = this.charSet_.length;
     }
-  
+
     /**
      * Convert all training text to integer indices.
      */
     convertAllTextToIndices_() {
       this.indices_ = new Uint16Array(this.textToIndices(this.textString_));
     }
-  
+
     /**
      * Generate the example-begin indices; shuffle them randomly.
      */
@@ -179,13 +179,13 @@ export class TextData {
           i += this.sampleStep_) {
         this.exampleBeginIndices_.push(i);
       }
-  
+
       // Randomly shuffle the beginning indices.
       tf.util.shuffle(this.exampleBeginIndices_);
       this.examplePosition_ = 0;
     }
   }
-  
+
   /**
    * Get a file by downloading it if necessary.
    *

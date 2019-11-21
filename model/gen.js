@@ -112,9 +112,8 @@ export async function gen() {
       model, textData, seedIndices, 600, 0.35);
 
   console.log(generated);
-  return `\n${generated}\n`;
-
-//   result = `\n${generated}\nWoo-ah!`;
+  return generated;
+  
   })();
 }
 gen();

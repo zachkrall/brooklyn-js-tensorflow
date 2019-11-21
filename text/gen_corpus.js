@@ -37,6 +37,7 @@ function sanitize (_input) {
   let string = _input || "";
 
   // remove hyperlinks
+  // i actually don't think this regex is correct, yikes
   string = string.replace(/http:\/\/.*..*/g,'');
 
   string = string.replace(/\r/g, '');

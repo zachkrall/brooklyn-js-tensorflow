@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const corpuspath = path.resolve(__dirname, "text", "corpusssss.txt");
+const corpuspath = path.resolve(__dirname, "results", "corpus.txt");
 
-let data = fs.readFileSync(__dirname + "/text/output_20191111.txt", {
+let data = fs.readFileSync(__dirname + "/results/output.json", {
     encoding: 'utf8'
 });
 data = data.replace(/\]\[/g,',');
@@ -24,7 +24,7 @@ if (!exists){
     });
 
     fs.writeFileSync(corpuspath, array.join(), {
-        encoding: 'utf8'
+        encoding: 'utf-8'
     });
 
     console.log('Done!');

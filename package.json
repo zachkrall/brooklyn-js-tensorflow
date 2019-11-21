@@ -4,10 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "train": "babel-node ./model/train.js --savePath ./model/brooklynjs/",
+    "gen": "babel-node ./model/gen.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "@tensorflow/tfjs": "^1.3.2",
+    "@tensorflow/tfjs-core": "^1.3.2",
+    "@tensorflow/tfjs-node": "^1.3.2",
+    "@tensorflow/tfjs-node-gpu": "^1.3.2",
+    "argparse": "^1.0.10",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "~1.7.0",
+    "clang-format": "~1.2.2",
+    "cross-env": "^5.1.6",
+    "parcel-bundler": "^1.12.4"
+  }
 }
